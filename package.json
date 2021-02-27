@@ -1,0 +1,25 @@
+{
+  "name": "note-taker",
+  "version": "1.0.0",
+  "description": "## Overview --- The purpose of this challenge is to create an application that can be used to write and save notes.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emarshall121/note_taker.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/emarshall121/note_taker/issues"
+  },
+  "homepage": "https://github.com/emarshall121/note_taker#readme"
+}
