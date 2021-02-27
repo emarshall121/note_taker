@@ -6,12 +6,18 @@ const notes = require('./Develop/data/db.json');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Route to homepage
+// Functions
+function findById(id, notesArray) {
+  const result = notesArray.filter(note => note.id === id)[0];
+  return result;
+  }
+
+// HTML Routes
 app.get('/', function (req, res) {
   res.send('hello!');
 });
 
-// Route to get JSON notes
+// API Routes
 app.get('/api/notes', (req, res) => {
   res.json(notes);
   });
