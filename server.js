@@ -1,13 +1,25 @@
+// Required Dependencies
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+
+// Sets the port number
 const PORT = process.env.PORT || 3001;
+
+// Creates the Express server
 const app = express();
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+
+// Allows server to access all public files
+app.use(express.static('./Develop/data/public'));
+
 const notes = require('./develop/data/db.json');
+
+// Array to hold note data
+let notesData = [];
 
 // Functions
 function createNewNote(body, notesArray) {
@@ -15,7 +27,7 @@ function createNewNote(body, notesArray) {
   notesArray.push(note);
 
   fs.writeFileSync(
-    path.join(__dirname, './Develop/data/notes.json'),
+    path.join(__dirname, './Develop/data/db.json'),
     JSON.stringify({ notes: notesArray }, null, 2)
   );
   
@@ -27,9 +39,14 @@ app.get('/api/notes', (req, res) => {
   res.json(notes);
 });
 
+// HTML Routes
 app.get('/', (req, res) => {
-  res.send('hello');
+  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
 });
+
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+})
 
 // POST Routes
 app.post('/api/notes', (req, res) => {
