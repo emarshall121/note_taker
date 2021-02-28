@@ -34,11 +34,6 @@ function createNewNote(body, notesArray) {
   return note;
 }
 
-// API Routes
-app.get('/api/notes', (req, res) => {
-  res.json(notes);
-});
-
 // HTML Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'));
@@ -48,7 +43,11 @@ app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, './public/notes.html'));
 })
 
-// POST Routes
+// API Routes
+app.get('/api/notes', (req, res) => {
+  res.json(notes);
+});
+
 app.post('/api/notes', (req, res) => {
   // set id based on what the next index of the array will be
   req.body.id = notes.length.toString();
@@ -58,6 +57,25 @@ app.post('/api/notes', (req, res) => {
   
   res.json(note);
 });
+
+// Delete a note
+// app.delete('/api/notes/:noteId', (req, res) => {
+//   console.log("Deleting" + req.params.noteId)
+
+//   fs.readFile("./data/db.json", "utf-8", (err, data) => {
+//     if (err) {throw err};
+
+//     // current notes
+//     let myArray = JSON.parse(data)
+
+//     // updated array
+//     let newArray = myArray.filter(note => note.id != req.params.noteId)
+
+//     fs.writeFile("./data/db.json", newArray, (err) =>{
+//       if (err) throw errres.sendStatus(200)
+//     })
+//   })
+// })
 
 // Listener for server
 app.listen(PORT, () => {
