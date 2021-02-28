@@ -62,4 +62,4 @@ app.post('/api/notes', (req, res) => {
 // Listener for server
 app.listen(PORT, () => {
   console.log(`API server now on port ${PORT}!`);
-  });
+});
