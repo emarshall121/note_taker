@@ -14,9 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Allows server to access all public files
-app.use(express.static('./Develop/data/public'));
+app.use(express.static('public'));
 
-const notes = require('./develop/data/db.json');
+const notes = require('./data/db.json');
 
 // Array to hold note data
 let notesData = [];
@@ -27,8 +27,8 @@ function createNewNote(body, notesArray) {
   notesArray.push(note);
 
   fs.writeFileSync(
-    path.join(__dirname, './Develop/data/db.json'),
-    JSON.stringify({ notes: notesArray }, null, 2)
+    path.join(__dirname, './data/db.json'),
+    JSON.stringify(notesArray, null, 2)
   );
   
   return note;
@@ -41,11 +41,11 @@ app.get('/api/notes', (req, res) => {
 
 // HTML Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+  res.sendFile(path.join(__dirname, './public/notes.html'));
 })
 
 // POST Routes
