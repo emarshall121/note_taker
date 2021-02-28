@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,10 +11,15 @@ const notes = require('./develop/data/db.json');
 
 // Functions
 function createNewNote(body, notesArray) {
-  console.log(body);
-  // our function's main code will go here!
-  // return finished code to post route for response
-  return body;
+  const note = body;
+  notesArray.push(note);
+
+  fs.writeFileSync(
+    path.join(__dirname, './Develop/data/notes.json'),
+    JSON.stringify({ notes: notesArray }, null, 2)
+  );
+  
+  return note;
 }
 
 // API Routes
@@ -29,7 +36,10 @@ app.post('/api/notes', (req, res) => {
   // set id based on what the next index of the array will be
   req.body.id = notes.length.toString();
   
-  res.json(req.body);
+  // add note to json file and notes array in this function
+  const note = createNewNote(req.body, notes);
+  
+  res.json(note);
 });
 
 // Listener for server
