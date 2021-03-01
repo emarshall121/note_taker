@@ -19,9 +19,6 @@ app.use(express.static('public'));
 const notes = require('./data/db.json');
 const { response } = require('express');
 
-// Array to hold note data
-let notesData = [];
-
 // Functions
 function createNewNote(body, notesArray) {
   const note = body;
@@ -46,6 +43,7 @@ app.get('/notes', (req, res) => {
 
 // API Routes
 app.get('/api/notes', (req, res) => {
+  // res.sendFile(path.join(__dirname, './data/db.json'));
   res.json(notes);
 });
 
