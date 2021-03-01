@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 const notes = require('./data/db.json');
+const { response } = require('express');
 
 // Array to hold note data
 let notesData = [];
@@ -59,23 +60,18 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete a note
-// app.delete('/api/notes/:noteId', (req, res) => {
-//   console.log("Deleting" + req.params.noteId)
-
-//   fs.readFile("./data/db.json", "utf-8", (err, data) => {
-//     if (err) {throw err};
-
-//     // current notes
-//     let myArray = JSON.parse(data)
-
-//     // updated array
-//     let newArray = myArray.filter(note => note.id != req.params.noteId)
-
-//     fs.writeFile("./data/db.json", newArray, (err) =>{
-//       if (err) throw errres.sendStatus(200)
-//     })
-//   })
-// })
+app.delete("/api/notes/:noteId", (req, res) => {
+  fs.readFile(path.join(__dirname, "/data/db.json"), (err, response) => {
+    if (err) throw (err);
+    let myArray = JSON.parse(response)
+    let newArray = myArray.filter (note => note.id != req.params.noteId)
+    console.log(newArray)
+    fs.writeFile(path.join(__dirname, "/data/db.json"), JSON.stringify(newArray, null, 2), (err) => {
+      if (err) throw (err);
+    })
+    return res.json(response)
+  })
+})
 
 // Listener for server
 app.listen(PORT, () => {
